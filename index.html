@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>หมาน้อยอาตอม</title>
+
+<style>
+body {
+  font-family: sans-serif;
+  background: #111;
+  color: white;
+  text-align: center;
+}
+
+.box {
+  width: 320px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #222;
+  border-radius: 12px;
+}
+
+#pet {
+  font-size: 90px;
+  margin: 10px;
+}
+
+button {
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+input {
+  width: 80%;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.bar {
+  height: 10px;
+  background: #444;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 5px 0;
+}
+
+.fill {
+  height: 100%;
+  background: limegreen;
+  width: 50%;
+  transition: 0.3s;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🐾 หมาน้อยอาตอม</h2>
+
+<div class="box">
+
+  <div id="pet">🐶</div>
+
+  <p>😊 ความสุข</p>
+  <div class="bar"><div id="happyBar" class="fill"></div></div>
+
+  <p>🍗 ความหิว</p>
+  <div class="bar"><div id="hungerBar" class="fill"></div></div>
+
+  <button onclick="feed()">ให้อาหาร</button>
+  <button onclick="play()">เล่น</button>
+
+  <hr>
+
+  <input id="msg" placeholder="พูดกับสัตว์เลี้ยง...">
+  <button onclick="talk()">ส่ง</button>
+
+  <p id="reply"></p>
+
+</div>
+
+<script>
+
+let hunger = 50;
+let happy = 50;
+
+// 🔧 update UI
+function update(){
+
+  document.getElementById("hungerBar").style.width = hunger + "%";
+  document.getElementById("happyBar").style.width = happy + "%";
+
+  let pet = document.getElementById("pet");
+
+  if(hunger > 80) pet.innerText = "😡";
+  else if(happy > 80) pet.innerText = "😄";
+  else if(hunger < 30) pet.innerText = "😋";
+  else if(happy < 30) pet.innerText = "😢";
+  else pet.innerText = "🐶";
+}
+
+// 🍗 feed
+function feed(){
+  hunger -= 25;
+  happy += 5;
+  clamp();
+  update();
+}
+
+// 🎾 play
+function play(){
+  happy += 25;
+  hunger += 10;
+  clamp();
+  update();
+}
+
+// 🔒 limit values
+function clamp(){
+  hunger = Math.max(0, Math.min(100, hunger));
+  happy = Math.max(0, Math.min(100, happy));
+}
+
+// 💬 talk system (AI style)
+function talk(){
+
+  let msg = document.getElementById("msg").value.toLowerCase();
+  let reply = "";
+
+  if (msg.includes("รัก") || msg.includes("ชอบ")) {
+    let r = [
+      "🐶 รักเหมือนกันเลย!",
+      "💖 ดีใจจัง!",
+      "🐾 เราก็รักเธอนะ!",
+      "😊 อบอุ่นใจมาก!"
+    ];
+    reply = r[Math.floor(Math.random() * r.length)];
+  }
+
+  else if (msg.includes("หิว") || msg.includes("กิน")) {
+    let r = [
+      "🍗 ขอไก่หน่อย!",
+      "🐶 หิวมากเลย!",
+      "🥺 ขออาหารหน่อย!",
+      "🍖 อยากกินแล้ว!"
+    ];
+    reply = r[Math.floor(Math.random() * r.length)];
+  }
+
+ else if (msg.includes("555ไมตลก") || msg.includes("กิน")) {
+    let r = [
+      "🍗 ไอหมาตอม!",
+      "🐶 ไอเตี้ย!",
+      "🥺 มีไรอยากบอกนะ!",
+      "🍖 เเต่ยังไม่บอกดีกว่า!"
+    ];
+    reply = r[Math.floor(Math.random() * r.length)];
+  }
+
+  else if (msg.includes("เล่น") || msg.includes("วิ่ง")) {
+    let r = [
+      "🎾 ไปเล่นกัน!",
+      "🐶 สนุกมาก!",
+      "😄 วิ่งๆ!",
+      "🏃‍♂️ มาเร็ว!"
+    ];
+    reply = r[Math.floor(Math.random() * r.length)];
+  }
+
+  else if (msg.includes("ชื่อ")) {
+    let r = [
+      "🐶 เราชื่อหมาอาตอม!",
+      "🐾 เรียกเราว่าอาตอม!",
+      "😎 Atom Dog!"
+    ];
+    reply = r[Math.floor(Math.random() * r.length)];
+  }
+
+  else if (msg.includes("เหงา")) {
+    let r = [
+      "🥺 มาอยู่ด้วยกันสิ",
+      "🐶 อย่าทิ้งเรา",
+      "💔 เราเหงา..."
+    ];
+    reply = r[Math.floor(Math.random() * r.length)];
+  }
+
+  else if (msg.includes("ง่วง") || msg.includes("นอน")) {
+    let r = [
+      "😴 ฝันดีนะ",
+      "💤 ขอไปนอนก่อน",
+      "🐶 ง่วงแล้ว..."
+    ];
+    reply = r[Math.floor(Math.random() * r.length)];
+  }
+
+  else if (msg.includes("โกรธ")) {
+    let r = [
+      "😡 งอนแล้วนะ",
+      "🐶 ไม่คุยแล้ว!",
+      "😤 ฮึ่ม!"
+    ];
+    reply = r[Math.floor(Math.random() * r.length)];
+  }
+
+  else {
+    let r = [
+      "🐶 ฟังอยู่นะ",
+      "🤔 ไม่เข้าใจแต่โอเค",
+      "🐾 เธอพูดอะไรนะ?",
+      "😄 สนุกจัง!"
+    ];
+    reply = r[Math.floor(Math.random() * r.length)];
+  }
+
+  happy += 5;
+  hunger += 3;
+
+  clamp();
+  document.getElementById("reply").innerText = reply;
+  update();
+}
+
+// ⏳ auto decay
+setInterval(()=>{
+  hunger += 2;
+  happy -= 1;
+  clamp();
+  update();
+}, 3000);
+
+update();
+
+</script>
+
+</body>
+</html>
