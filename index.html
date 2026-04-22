@@ -2,6 +2,10 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
+
+<!-- 📱 สำคัญมากสำหรับมือถือ -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>หมาน้อยอาตอม</title>
 
 <style>
@@ -10,41 +14,55 @@ body {
   background: #111;
   color: white;
   text-align: center;
-}
-
-.box {
-  width: 320px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #222;
-  border-radius: 12px;
-}
-
-#pet {
-  font-size: 90px;
-  margin: 10px;
-}
-
-button {
+  margin: 0;
   padding: 10px;
-  margin: 5px;
+}
+
+/* 📦 กล่องหลัก */
+.box {
+  width: 95%;
+  max-width: 420px;
+  margin: 10px auto;
+  padding: 15px;
+  background: #222;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+
+/* 🐶 ตัวสัตว์ */
+#pet {
+  font-size: 100px;
+  margin: 10px 0;
+}
+
+/* 🔘 ปุ่มมือถือ */
+button {
+  width: 45%;
+  padding: 14px;
+  margin: 5px 2%;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
+  font-size: 16px;
   cursor: pointer;
 }
 
+/* ⌨️ input */
 input {
-  width: 80%;
-  padding: 8px;
-  border-radius: 6px;
+  width: 90%;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-bottom: 8px;
+  border: none;
 }
 
+/* 📊 แถบสถานะ */
 .bar {
-  height: 10px;
+  height: 14px;
   background: #444;
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
-  margin: 5px 0;
+  margin: 6px 0 12px;
 }
 
 .fill {
@@ -87,9 +105,8 @@ input {
 let hunger = 50;
 let happy = 50;
 
-// 🔧 update UI
+// 🔧 อัปเดต UI
 function update(){
-
   document.getElementById("hungerBar").style.width = hunger + "%";
   document.getElementById("happyBar").style.width = happy + "%";
 
@@ -102,7 +119,7 @@ function update(){
   else pet.innerText = "🐶";
 }
 
-// 🍗 feed
+// 🍗 ให้อาหาร
 function feed(){
   hunger -= 25;
   happy += 5;
@@ -110,7 +127,7 @@ function feed(){
   update();
 }
 
-// 🎾 play
+// 🎾 เล่น
 function play(){
   happy += 25;
   hunger += 10;
@@ -118,39 +135,81 @@ function play(){
   update();
 }
 
-// 🔒 limit values
+// 🔒 จำกัดค่า
 function clamp(){
   hunger = Math.max(0, Math.min(100, hunger));
   happy = Math.max(0, Math.min(100, happy));
 }
 
-// 💬 talk system (AI style)
+// 💬 ระบบพูดคุย (ฉลาด + สุ่ม)
 function talk(){
 
   let msg = document.getElementById("msg").value.toLowerCase();
   let reply = "";
 
+  function random(arr){
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
   if (msg.includes("รัก") || msg.includes("ชอบ")) {
-    let r = [
+    reply = random([
       "🐶 รักเหมือนกันเลย!",
       "💖 ดีใจจัง!",
       "🐾 เราก็รักเธอนะ!",
       "😊 อบอุ่นใจมาก!"
-    ];
-    reply = r[Math.floor(Math.random() * r.length)];
+    ]);
   }
 
   else if (msg.includes("หิว") || msg.includes("กิน")) {
-    let r = [
+    reply = random([
       "🍗 ขอไก่หน่อย!",
       "🐶 หิวมากเลย!",
       "🥺 ขออาหารหน่อย!",
       "🍖 อยากกินแล้ว!"
-    ];
-    reply = r[Math.floor(Math.random() * r.length)];
+    ]);
   }
 
- else if (msg.includes("555ไมตลก") || msg.includes("กิน")) {
+  else if (msg.includes("เล่น") || msg.includes("วิ่ง")) {
+    reply = random([
+      "🎾 ไปเล่นกัน!",
+      "🐶 สนุกมาก!",
+      "😄 วิ่งๆ!",
+      "🏃‍♂️ มาเร็ว!"
+    ]);
+  }
+
+  else if (msg.includes("ชื่อ")) {
+    reply = random([
+      "🐶 เราชื่อหมาอาตอม!",
+      "🐾 เรียกเราว่าอาตอม!",
+      "😎 Atom Dog!"
+    ]);
+  }
+
+  else if (msg.includes("เหงา")) {
+    reply = random([
+      "🥺 มาอยู่ด้วยกันสิ",
+      "🐶 อย่าทิ้งเรา",
+      "💔 เราเหงา..."
+    ]);
+  }
+
+  else if (msg.includes("ง่วง") || msg.includes("นอน")) {
+    reply = random([
+      "😴 ฝันดีนะ",
+      "💤 ขอไปนอนก่อน",
+      "🐶 ง่วงแล้ว..."
+    ]);
+  }
+
+  else if (msg.includes("โกรธ")) {
+    reply = random([
+      "😡 งอนแล้วนะ",
+      "🐶 ไม่คุยแล้ว!",
+      "😤 ฮึ่ม!"
+    ]);
+  }
+else if (msg.includes("555ไมตลก") || msg.includes("กิน")) {
     let r = [
       "🍗 ไอหมาตอม!",
       "🐶 ไอเตี้ย!",
@@ -160,60 +219,13 @@ function talk(){
     reply = r[Math.floor(Math.random() * r.length)];
   }
 
-  else if (msg.includes("เล่น") || msg.includes("วิ่ง")) {
-    let r = [
-      "🎾 ไปเล่นกัน!",
-      "🐶 สนุกมาก!",
-      "😄 วิ่งๆ!",
-      "🏃‍♂️ มาเร็ว!"
-    ];
-    reply = r[Math.floor(Math.random() * r.length)];
-  }
-
-  else if (msg.includes("ชื่อ")) {
-    let r = [
-      "🐶 เราชื่อหมาอาตอม!",
-      "🐾 เรียกเราว่าอาตอม!",
-      "😎 Atom Dog!"
-    ];
-    reply = r[Math.floor(Math.random() * r.length)];
-  }
-
-  else if (msg.includes("เหงา")) {
-    let r = [
-      "🥺 มาอยู่ด้วยกันสิ",
-      "🐶 อย่าทิ้งเรา",
-      "💔 เราเหงา..."
-    ];
-    reply = r[Math.floor(Math.random() * r.length)];
-  }
-
-  else if (msg.includes("ง่วง") || msg.includes("นอน")) {
-    let r = [
-      "😴 ฝันดีนะ",
-      "💤 ขอไปนอนก่อน",
-      "🐶 ง่วงแล้ว..."
-    ];
-    reply = r[Math.floor(Math.random() * r.length)];
-  }
-
-  else if (msg.includes("โกรธ")) {
-    let r = [
-      "😡 งอนแล้วนะ",
-      "🐶 ไม่คุยแล้ว!",
-      "😤 ฮึ่ม!"
-    ];
-    reply = r[Math.floor(Math.random() * r.length)];
-  }
-
   else {
-    let r = [
+    reply = random([
       "🐶 ฟังอยู่นะ",
       "🤔 ไม่เข้าใจแต่โอเค",
       "🐾 เธอพูดอะไรนะ?",
       "😄 สนุกจัง!"
-    ];
-    reply = r[Math.floor(Math.random() * r.length)];
+    ]);
   }
 
   happy += 5;
@@ -224,7 +236,7 @@ function talk(){
   update();
 }
 
-// ⏳ auto decay
+// ⏳ ลดค่าอัตโนมัติ
 setInterval(()=>{
   hunger += 2;
   happy -= 1;
